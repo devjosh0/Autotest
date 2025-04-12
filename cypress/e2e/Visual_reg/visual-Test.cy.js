@@ -1,26 +1,31 @@
 describe('Login', () => {
-  it('should be publicly accessible', () => {
+  beforeEach(() => {
     cy.visit('https://amalitech-website-web.vercel.app/testing-space');
+    cy.viewport(1250, 732);
+    cy.wait(3000); // Match your snapshot size
+  });
 
-    // snapshot name will be the test title
-    //cy.matchImageSnapshot();
-
-    // snapshot name will be the name passed in
-    //cy.matchImageSnapshot('googleLandPage');
-    // snapshot will be created inside `some/dir`
-    //cy.matchImageSnapshot('C:\Users\HusseinAmadu\Desktop\Cypress TiT\cypress\e2e\Visual_reg')
-    // options object passed in
-    // cy.matchImageSnapshot({
-    //   failureThreshold: 0.4
-    //   blur: 10
-    // });
-    // match element snapshot
-    cy.get('body > header').matchImageSnapshot('Header');
-    //cy.get('.bg-primary-alt').matchImageSnapshot('Image Slider');
-    cy.get('main > :nth-child(2)').matchImageSnapshot('Big statement')
-    cy.get('.w-full.text-white').matchImageSnapshot('Block Quote')
-    cy.get('main > :nth-child(5)').matchImageSnapshot('Info card')
-    cy.get('main > :nth-child(6)').matchImageSnapshot('Info card with Icon')
-    cy.get('.bg-neutral').matchImageSnapshot('footer')
+  it('header', () => {
+    cy.get('body > header').should('be.visible').matchImageSnapshot('Header');
+  });
+  it('Image Slider',()=>{
+    cy.get('.bg-primary-alt.w-full').should('be.visible').matchImageSnapshot('Image Slider');
+  });
+  it('Big Statement',()=>{
+    cy.get('main > :nth-child(2)').should('be.visible').matchImageSnapshot('Big statement')
+  });
+  it('Block Quote',()=>{
+    cy.get('.w-full.text-white').should('be.visible').matchImageSnapshot('Block Quote')
+  });
+  it('Info Card',()=>{
+    cy.get('body > main > main > section:nth-child(5)').should('be.visible').matchImageSnapshot('Info card')
+  });
+  it('Info Card With Icon',()=>{
+    cy.wait(2000);
+    cy.get('body > main > main > section:nth-child(6) > div > div.grid.grid-cols-6.gap-sm.w-full.h-full > div:nth-child(1) > div > div.small > figure > div > img').should('be.visible')
+    cy.get('body > main > main > section:nth-child(6) > div').should('be.visible').matchImageSnapshot('Info card with Icon')
+  });
+  it('Footer',()=>{
+    cy.get('.bg-neutral').should('be.visible').matchImageSnapshot('footer')
   });
 });
